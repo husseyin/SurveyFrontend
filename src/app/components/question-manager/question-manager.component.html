@@ -1,0 +1,161 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<div style="margin: 3%" class="card">
+  <div style="font-weight: bold" class="card-header">SORU YÖNETİMİ</div>
+
+  <div class="card-body">
+    <div style="margin: 1%">
+      <button
+        pButton
+        pRipple
+        label="Ekle"
+        icon="pi pi-plus"
+        class="p-button-success p-mr-2"
+        (click)="openNew()"
+      ></button>
+    </div>
+    <p-table
+      #questionTable
+      [value]="questions"
+      dataKey="Id"
+      [paginator]="true"
+      [rows]="rows"
+      [showCurrentPageReport]="true"
+      [(first)]="first"
+      currentPageReportTemplate="{first} to {last} of {totalRecords}"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      styleClass="p-datatable-customers"
+      [globalFilterFields]="['Name']"
+    >
+      <ng-template pTemplate="header">
+        <tr>
+          <td>
+            <div class="p-mb-3">
+              <p-button
+                type="button"
+                icon="pi pi-chevron-left"
+                (click)="prev()"
+                [disabled]="isFirstPage()"
+                styleClass="p-button-text"
+              ></p-button>
+              <p-button
+                type="button"
+                icon="pi pi-refresh"
+                (click)="reset()"
+                styleClass="p-button-text"
+              ></p-button>
+              <p-button
+                type="button"
+                icon="pi pi-chevron-right"
+                (click)="next()"
+                [disabled]="isLastPage()"
+                styleClass="p-button-text"
+              ></p-button>
+            </div>
+          </td>
+          <td></td>
+
+          <td colspan="2">
+            <p-columnFilter type="text" field="Name"></p-columnFilter>
+          </td>
+        </tr>
+
+        <tr>
+          <th colspan="3" pSortableColumn="Name">
+            Sorular
+            <p-sortIcon field="Name"></p-sortIcon>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-question let-rowIndex="rowIndex">
+        <tr>
+          <td colspan="2">{{ rowIndex + 1 }}. {{ question.Name }}</td>
+          <td colspan="2">
+            <button
+              pButton
+              pRipple
+              icon="pi pi-trash"
+              class="p-button-rounded p-button-warning"
+              (click)="deleteQuestion(question)"
+            ></button>
+          </td>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          toplam '{{ questions ? questions.length : 0 }}' soru.
+        </div>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td>Soru bulunamadı.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+  <p-dialog
+    [(visible)]="questionDialog"
+    [style]="{ width: '450px' }"
+    header="Soru Ekleme"
+    [modal]="true"
+    styleClass="p-fluid"
+  >
+    <ng-template pTemplate="content">
+      <div class="p-field" style="margin-bottom: 5%">
+        <label for="question">Soru.</label>
+        <input
+          type="text"
+          pInputText
+          id="question"
+          [(ngModel)]="question.Name"
+          required
+          autofocus
+        />
+        <small class="p-error" *ngIf="submitted && !question.Name"
+          >Boş Geçilemez!</small
+        >
+      </div>
+
+      <div class="p-field" style="margin-bottom: 20%">
+        <label for="company">Şirket.</label>
+        <p-dropdown
+          [(ngModel)]="question.Company"
+          inputId="company"
+          [options]="companies"
+          placeholder="Seçiniz"
+        >
+          <ng-template let-option pTemplate="item">
+            <span [class]="'product-badge status-' + option.value">{{
+              option.label
+            }}</span>
+          </ng-template>
+        </p-dropdown>
+        <small class="p-error" *ngIf="submitted && !question.Company"
+          >Boş Geçilemez!</small
+        >
+      </div>
+    </ng-template>
+    <ng-template pTemplate="footer">
+      <button
+        pButton
+        pRipple
+        label="Cancel"
+        icon="pi pi-times"
+        class="p-button-text"
+        (click)="hideDialog()"
+      ></button>
+      <button
+        pButton
+        pRipple
+        label="Save"
+        icon="pi pi-check"
+        class="p-button-text"
+        (click)="saveQuestion()"
+      ></button>
+    </ng-template>
+  </p-dialog>
+</div>

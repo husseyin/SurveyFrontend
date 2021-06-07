@@ -1,0 +1,55 @@
+#textarea {
+  margin-left: 1%;
+  height: 80pt;
+  width: 50%;
+  float: left;
+}
+#button {
+  margin: 1%;
+  width: 15%;
+  float: right;
+}
+
+input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+}
+
+input + svg {
+  cursor: pointer;
+}
+
+svg {
+  height: 3rem;
+  width: 3rem;
+  margin-left: 3rem;
+}
+
+input[id="0"] + svg {
+  fill: rgb(0, 109, 217);
+}
+input[id="1"] + svg {
+  fill: rgb(0, 204, 79);
+}
+input[id="2"] + svg {
+  fill: rgb(232, 214, 0);
+}
+input[id="3"] + svg {
+  fill: rgb(229, 132, 0);
+}
+input[id="4"] + svg {
+  fill: rgb(239, 42, 16);
+}
+
+input[id="0"]:checked + svg,
+:hover + svg,
+input[id="1"]:checked + svg,
+:hover + svg,
+input[id="2"]:checked + svg,
+:hover + svg,
+input[id="3"]:checked + svg,
+:hover + svg,
+input[id="4"]:checked + svg,
+:hover + svg {
+  border-style: outset;
+}

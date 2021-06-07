@@ -1,0 +1,67 @@
+<div style="margin: 2%" class="card">
+  <div style="font-weight: bold" class="card-header">GERİ BİLDİRİM ANKETİ</div>
+
+  <div class="card-body">
+    <form #myForm="ngForm">
+      <div
+        *ngFor="let question of questions; let i = index"
+        style="margin: 1%"
+        class="card"
+      >
+        <div style="font-size: medium; font-weight: bold;" class="card-header">
+          {{ i + 1 }}. {{ question.Name }}
+        </div>
+        <div class="card-body">
+          <label *ngFor="let answer of answers; let j = index">
+            <input
+              id="{{ j }}"
+              type="radio"
+              ngModel
+              name="{{ question.Id }}"
+              value="{{ answer.Id }}"
+              required
+            />
+
+            <svg viewBox="0 0 24 24">
+              <path attr.d="{{ radioPaths[j] }}" />
+            </svg>
+          </label>
+        </div>
+      </div>
+      <div class="form-floating">
+        <textarea
+          id="textarea"
+          ngModel
+          name="description"
+          class="form-control"
+          placeholder="Leave a comment here"
+        ></textarea>
+        <button
+          id="button"
+          (click)="Clean(myForm)"
+          type="button"
+          class="btn btn-outline-secondary"
+        >
+          Temizle
+        </button>
+        <button
+          id="button"
+          (click)="getForm(myForm)"
+          type="button"
+          class="btn btn-outline-success"
+        >
+          Gönder
+        </button>
+        <label for="floatingTextarea" style="margin-left: 1%"
+          >Görüş ve Yorum..</label
+        >
+      </div>
+    </form>
+  </div>
+  <div
+    style="text-align: right; font-size: small"
+    class="card-footer text-muted"
+  >
+    Copyright © 2021 Survey. All rights reserved.
+  </div>
+</div>
