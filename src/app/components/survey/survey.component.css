@@ -10,6 +10,16 @@
   float: right;
 }
 
+#valid {
+  background-color: red;
+  color: white;
+  width: 60px;
+  height: 30px;
+  font-size: medium;
+  font-weight: bold;
+  margin-top: 1%;
+}
+
 input[type="radio"] {
   position: absolute;
   opacity: 0;
@@ -37,9 +47,6 @@ input[id="2"] + svg {
 input[id="3"] + svg {
   fill: rgb(229, 132, 0);
 }
-input[id="4"] + svg {
-  fill: rgb(239, 42, 16);
-}
 
 input[id="0"]:checked + svg,
 :hover + svg,
@@ -48,8 +55,6 @@ input[id="1"]:checked + svg,
 input[id="2"]:checked + svg,
 :hover + svg,
 input[id="3"]:checked + svg,
-:hover + svg,
-input[id="4"]:checked + svg,
 :hover + svg {
   border-style: outset;
 }

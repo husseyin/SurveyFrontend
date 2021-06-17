@@ -8,13 +8,26 @@ import { UserAnswer } from '../models/user-answer';
   providedIn: 'root',
 })
 export class UserAnswerService {
-  url = environment.apiUrl + '/useranswers';
+  private url = environment.apiUrl + '/useranswers';
 
   constructor(private httpClient: HttpClient) {}
 
   getUserAnswers(): Observable<UserAnswer[]> {
     let newUrl = this.url + '/getall';
     return this.httpClient.get<UserAnswer[]>(newUrl);
+  }
+
+  getUserAnswerByQuestionId(questionId: number): Observable<UserAnswer[]> {
+    let newUrl =
+      this.url + '/getuseranswerbyquestionid?questionId=' + questionId;
+    return this.httpClient.get<UserAnswer[]>(newUrl);
+  }
+
+  getCountAnswerByQuestionId(questionId: number): Observable<any> {
+    let newUrl =
+      this.url + '/getcountanswerbyquestionid?questionId=' + questionId;
+
+    return this.httpClient.get<any>(newUrl);
   }
 
   userAnswerAdd(userAnswer: UserAnswer): Observable<UserAnswer> {

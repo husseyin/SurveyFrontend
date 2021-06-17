@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <p-confirmDialog></p-confirmDialog>
-<div style="margin: 3%" class="card">
+<div style="margin: 2%" class="card">
   <div style="font-weight: bold" class="card-header">SORU YÖNETİMİ</div>
 
   <div class="card-body">
@@ -120,21 +120,17 @@
         >
       </div>
 
+      <label for="company">Şirket.</label>
       <div class="p-field" style="margin-bottom: 20%">
-        <label for="company">Şirket.</label>
         <p-dropdown
-          [(ngModel)]="question.Company"
-          inputId="company"
+          [(ngModel)]="selectCompany"
           [options]="companies"
-          placeholder="Seçiniz"
+          optionLabel="Name"
+          placeholder="Soru Seçin."
         >
-          <ng-template let-option pTemplate="item">
-            <span [class]="'product-badge status-' + option.value">{{
-              option.label
-            }}</span>
-          </ng-template>
         </p-dropdown>
-        <small class="p-error" *ngIf="submitted && !question.Company"
+
+        <small class="p-error" *ngIf="submitted && !question.CompanyId"
           >Boş Geçilemez!</small
         >
       </div>

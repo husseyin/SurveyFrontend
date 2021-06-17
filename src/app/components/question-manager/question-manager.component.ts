@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Question } from 'src/app/models/question';
 import { QuestionService } from 'src/app/services/question.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CompanyService } from 'src/app/services/company.service';
+import { Company } from 'src/app/models/company';
 
 @Component({
   selector: 'app-question-manager',
@@ -10,38 +12,41 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class QuestionManagerComponent implements OnInit {
   questions: Question[];
+  companies: Company[];
 
   question: Question;
 
   questionDialog: boolean;
 
   selectedQuestions: Question[];
+  selectCompany: Company;
 
   submitted: boolean;
-
-  companies: any[];
 
   first = 0;
   rows = 10;
 
   constructor(
     private questionService: QuestionService,
+    private companyService: CompanyService,
     private messageService: MessageService,
     private confirmationService: ConfirmationService
   ) {}
 
   ngOnInit() {
     this.getQuestions();
-
-    this.companies = [
-      { label: 'EFATUR', value: 'EFATUR' },
-      { label: 'PEGASUS', value: 'PEGASUS' },
-    ];
+    this.getCompanies();
   }
 
   getQuestions() {
     this.questionService.getQuestions().subscribe((question) => {
       this.questions = question;
+    });
+  }
+
+  getCompanies() {
+    this.companyService.getCompanies().subscribe((company) => {
+      this.companies = company;
     });
   }
 
@@ -78,7 +83,7 @@ export class QuestionManagerComponent implements OnInit {
         if (question) {
           this.question.Id = question.Id;
           this.question.Name = question.Name;
-          this.question.Company = question.Company;
+          this.question.CompanyId = question.CompanyId;
 
           this.questionService.questionDelete(this.question).subscribe(
             (response) => {
@@ -88,10 +93,8 @@ export class QuestionManagerComponent implements OnInit {
                 detail: 'Soru Silindi.',
                 life: 3000,
               });
-
-              this.questions = this.questions.filter(
-                (value) => value.Id !== question.Id
-              );
+            
+              this.getQuestions();
             },
             (responseError) => {
               this.messageService.add({
@@ -110,7 +113,6 @@ export class QuestionManagerComponent implements OnInit {
   }
 
   hideDialog() {
-    console.log('hideDialog');
     this.questionDialog = false;
     this.submitted = false;
   }
@@ -125,9 +127,9 @@ export class QuestionManagerComponent implements OnInit {
     this.submitted = true;
 
     this.question.Name = this.question.Name;
-    this.question.Company = this.question.Company;
+    this.question.CompanyId = this.selectCompany.Id;
 
-    if (this.question.Company && this.question.Name) {
+    if (this.question.CompanyId && this.question.Name) {
       if (this.questions.find((find) => this.question.Name == find.Name)) {
         this.messageService.add({
           severity: 'error',
@@ -144,7 +146,7 @@ export class QuestionManagerComponent implements OnInit {
               detail: 'Soru Eklendi.',
               life: 3000,
             });
-            window.location.reload();
+            this.getQuestions();
           },
           (responseError) => {
             this.messageService.add({

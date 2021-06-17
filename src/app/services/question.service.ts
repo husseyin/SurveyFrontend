@@ -8,12 +8,17 @@ import { Question } from '../models/question';
   providedIn: 'root',
 })
 export class QuestionService {
-  url = environment.apiUrl + '/questions';
+  private url = environment.apiUrl + '/questions';
 
   constructor(private httpClient: HttpClient) {}
 
   getQuestions(): Observable<Question[]> {
     let newUrl = this.url + '/getall';
+    return this.httpClient.get<Question[]>(newUrl);
+  }
+
+  getQuestionsByCompanyId(companyId: number): Observable<Question[]> {
+    let newUrl = this.url + '/getbycompanyid?companyId=' + companyId;
     return this.httpClient.get<Question[]>(newUrl);
   }
 

@@ -1,3 +1,4 @@
+
 <div style="margin: 2%" class="card">
   <div style="font-weight: bold" class="card-header">GERİ BİLDİRİM ANKETİ</div>
 
@@ -8,9 +9,10 @@
         style="margin: 1%"
         class="card"
       >
-        <div style="font-size: medium; font-weight: bold;" class="card-header">
+        <div style="font-size: medium; font-weight: bold" class="card-header">
           {{ i + 1 }}. {{ question.Name }}
         </div>
+
         <div class="card-body">
           <label *ngFor="let answer of answers; let j = index">
             <input
@@ -27,7 +29,12 @@
             </svg>
           </label>
         </div>
+
+        <div *ngIf="valids.length > 0 && !valids[i].Valid" id="valid">
+          Seçiniz.
+        </div>
       </div>
+
       <div class="form-floating">
         <textarea
           id="textarea"
@@ -36,6 +43,9 @@
           class="form-control"
           placeholder="Leave a comment here"
         ></textarea>
+        <label for="floatingTextarea" style="margin-left: 1%"
+          >Görüş ve Yorum..</label
+        >
         <button
           id="button"
           (click)="Clean(myForm)"
@@ -52,9 +62,6 @@
         >
           Gönder
         </button>
-        <label for="floatingTextarea" style="margin-left: 1%"
-          >Görüş ve Yorum..</label
-        >
       </div>
     </form>
   </div>

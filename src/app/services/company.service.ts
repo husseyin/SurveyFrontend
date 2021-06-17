@@ -2,18 +2,18 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Answer } from '../models/answer';
+import { Company } from '../models/company';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AnswerService {
-  private url = environment.apiUrl + '/answers';
+export class CompanyService {
+  private url = environment.apiUrl + '/companies';
 
   constructor(private httpClient: HttpClient) {}
 
-  getAnswers(): Observable<Answer[]> {
+  getCompanies(): Observable<Company[]> {
     let newUrl = this.url + '/getall';
-    return this.httpClient.get<Answer[]>(newUrl);
+    return this.httpClient.get<Company[]>(newUrl);
   }
 }

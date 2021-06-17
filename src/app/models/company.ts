@@ -1,4 +1,4 @@
-export interface Answer {
+export interface Company {
   Id: number;
   Name: string;
 }

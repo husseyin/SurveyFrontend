@@ -1,0 +1,22 @@
+<nav *ngIf="visibility" style=" background-color: lavenderblush;margin: 1%;" class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01"
+            aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+            <a style="font-weight: bold;" class="navbar-brand" href="/">Survey</a>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                <li class="nav-item">
+                    <u><a class="nav-link" href="question-manager">Yönetim</a></u>
+                </li>
+                <li class="nav-item">
+                    <u><a class="nav-link" href="report">Rapor</a></u>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <button (click)="exit()" type="button" class="btn btn-outline-danger btn-sm">Çıkış</button>
+</nav>

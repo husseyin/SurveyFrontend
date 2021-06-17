@@ -3,6 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Answer } from 'src/app/models/answer';
 import { Question } from 'src/app/models/question';
 import { UserAnswer } from 'src/app/models/user-answer';
+import { Valid } from 'src/app/models/valid';
 import { AnswerService } from 'src/app/services/answer.service';
 import { QuestionService } from 'src/app/services/question.service';
 import { UserAnswerService } from 'src/app/services/user-answer.service';
@@ -17,6 +18,8 @@ export class SurveyComponent implements OnInit {
   answers: Answer[];
 
   radioPaths: string[];
+
+  valids: Array<Valid> = [];
 
   constructor(
     private questionService: QuestionService,
@@ -63,21 +66,36 @@ export class SurveyComponent implements OnInit {
               ? myForm.controls.description.value
               : null;
 
-          this.userAnswerService.userAnswerAdd(userAnswer).subscribe();
+          this.userAnswerService.userAnswerAdd(userAnswer).subscribe(
+            (response) => {
+              this.valids = [];
+              myForm.resetForm();
+            },
+            (responsError) => {
+              this.toastrService.error('İşlem Başarısız!');
+            }
+          );
         }
       });
-      this.toastrService.success('Teşekkürler, Formunuz Gönderilmiştir.');
-      myForm.resetForm();
+      this.toastrService.success('Formunuz Gönderilmiştir.');
     } else {
-      this.toastrService.error('Lütfen Formu Eksiksiz Doldurun!');
+      this.toastrService.error('Formu Eksiksiz Doldurunuz!');
+      this.valids = [];
     }
+
+    Object.keys(myForm.form.controls).forEach((control) => {
+      let valid = new Valid();
+
+      valid.Id = +control;
+      valid.Valid =
+        myForm.form.controls[control].status != 'VALID' ? false : true;
+
+      this.valids.push(valid);
+    });
   }
 
   Clean(myForm: any) {
     myForm.resetForm();
-  }
-
-  adminButton() {
-    console.log('Yönetim Panelie Giriş..');
+    this.valids = [];
   }
 }
