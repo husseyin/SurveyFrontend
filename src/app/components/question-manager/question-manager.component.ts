@@ -47,6 +47,7 @@ export class QuestionManagerComponent implements OnInit {
   getCompanies() {
     this.companyService.getCompanies().subscribe((company) => {
       this.companies = company;
+      this.selectCompany = company[0];
     });
   }
 
@@ -93,7 +94,7 @@ export class QuestionManagerComponent implements OnInit {
                 detail: 'Soru Silindi.',
                 life: 3000,
               });
-            
+
               this.getQuestions();
             },
             (responseError) => {
