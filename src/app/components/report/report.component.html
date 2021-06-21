@@ -7,7 +7,7 @@
     </p-dropdown>
 
     <p-dropdown *ngIf="selectCompany" [options]="questions" optionLabel="Name" [(ngModel)]="selectQuestion"
-      [filter]="true" filterBy="Name" [showClear]="true" placeholder="Soru Seçin.">
+      [filter]="true" filterBy="Name" placeholder="Soru Seçin.">
     </p-dropdown>
 
     <button (click)="getReport(selectQuestion)" style="margin: 1%; width: 12%" pButton pRipple type="button"
